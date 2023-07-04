@@ -22,10 +22,7 @@ public class RandomPick {
 
 		try {
 			List<String>list = Files.readAllLines(path);
-			names = new String[list.size()];
-			for (int i = 0; i < names.length; i = i + 1){
-				names[i] = list.get(i);
-			}
+			names = list.toArray(new String[0]);
 			file = filename;
 			canUse = true;
 		} catch (IOException e) {

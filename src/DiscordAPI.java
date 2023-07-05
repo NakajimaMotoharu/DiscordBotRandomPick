@@ -65,6 +65,7 @@ public class DiscordAPI extends ListenerAdapter {
 					リスト: 読み込まれているファイルの中身を表示します
 					ファイル名: 読み込まれているファイル名を表示します
 					ピック: 指定数ランダムにピックします
+					ひとつ: 1つランダムにピックします
 					ヘルプ: コマンドリストを表示します
 					終了: ボットを終了します""");
 			case "!終了" -> {
@@ -91,6 +92,11 @@ public class DiscordAPI extends ListenerAdapter {
 					}
 				}
 				outMessage(msg, ans);
+			}
+			case "!ひとり" -> {
+				String[] list = RandomPick.randomPick(1);
+				outMessage(msg, Objects.requireNonNull(list)[0]);
+				mode = 0;
 			}
 		}
 	}

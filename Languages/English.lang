@@ -1,0 +1,28 @@
+!load
+!pick
+!list
+!filename
+!help
+!exit
+!filelist
+!one
+Please enter a file name.
+File not loaded.
+Please enter number of picks.
+File not loaded.
+File not loaded.
+Good-bye.
+File has been read.
+File could not be read.
+Not a number.
+Invalid pick number.
+The following is the command list.
+Execute the command with "!command".
+load: loads a file.
+filelist: displays a list of files that can be loaded.
+list: Displays the contents of the loaded files.
+filename: Displays the name of the file being loaded.
+pick: Randomly picks a specified number of files.
+one: Picks one at random.
+help: Displays a list of commands.
+exit: Exits the bot.

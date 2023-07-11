@@ -11,7 +11,7 @@ public class RandomPick {
 	public static boolean canUse = false;
 
 	public static void init(String filename){
-		Path path = Paths.get(filename + ".txt");
+		Path path = Paths.get("Text/" + filename + ".txt");
 		file = null;
 		names = null;
 		canUse = false;

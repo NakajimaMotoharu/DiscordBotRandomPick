@@ -26,94 +26,79 @@ public class DiscordAPI extends ListenerAdapter {
 	}
 
 	public void defaultMode(String str, Message msg) {
-		switch (str) {
-			case "!ロード" -> {
-				outMessage(msg, "ファイル名を入力してください");
-				mode = 1;
+		if (str.equals(Lang.command[0])) {
+			outMessage(msg, Lang.text[0]);
+			mode = 1;
+		} else if (str.equals(Lang.command[1])) {
+			if (RandomPick.file == null) {
+				outMessage(msg, Lang.text[1]);
+			} else {
+				outMessage(msg, Lang.text[2]);
+				mode = 2;
 			}
-			case "!ピック" -> {
-				if (RandomPick.file == null) {
-					outMessage(msg, "ファイルが読み込まれていません");
-				} else {
-					outMessage(msg, "ピック数を入力してください");
-					mode = 2;
-				}
-			}
-			case "!リスト" -> {
-				String[] list = RandomPick.printAll();
-				if (list == null) {
-					outMessage(msg, "ファイルが読み込まれていません");
-				} else {
-					String all = "", tmp;
-					for (int i = 0; i < list.length; i = i + 1) {
-						if (i + 1 == list.length) {
-							tmp = all + list[i];
-						} else {
-							tmp = all + list[i] + "\n";
-						}
-						all = tmp;
+		} else if (str.equals(Lang.command[2])) {
+			String[] list = RandomPick.printAll();
+			if (list == null) {
+				outMessage(msg, Lang.text[3]);
+			} else {
+				String all = "", tmp;
+				for (int i = 0; i < list.length; i = i + 1) {
+					if (i + 1 == list.length) {
+						tmp = all + list[i];
+					} else {
+						tmp = all + list[i] + "\n";
 					}
-					outMessage(msg, all);
+					all = tmp;
 				}
+				outMessage(msg, all);
 			}
-			case "!ファイル名" -> outMessage(msg, Objects.requireNonNullElse(RandomPick.file, "ファイルが読み込まれていません"));
-			case "!ヘルプ" -> outMessage(msg, """
-					以下がコマンドリストになります
-					"!コマンド"で実行です
-					ロード: ファイルを読み込みます
-					ファイル一覧: 読み込めるファイルの一覧を表示します
-					リスト: 読み込まれているファイルの中身を表示します
-					ファイル名: 読み込まれているファイル名を表示します
-					ピック: 指定数ランダムにピックします
-					ひとつ: 1つランダムにピックします
-					ヘルプ: コマンドリストを表示します
-					終了: ボットを終了します""");
-			case "!終了" -> {
-				outMessage(msg, "さようなら");
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException ex) {
-					ex.printStackTrace();
-				}
-				System.exit(0);
+		} else if (str.equals(Lang.command[3])) {
+			outMessage(msg, Objects.requireNonNullElse(RandomPick.file, Lang.text[4]));
+		} else if (str.equals(Lang.command[4])) {
+			outMessage(msg, Lang.getHelp());
+		} else if (str.equals(Lang.command[5])) {
+			outMessage(msg, Lang.text[5]);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
 			}
-			case "!ファイル一覧" -> {
-				File dir = new File("./");
-				File[] files = dir.listFiles();
-				String ans = "", tmp;
-				for (int i = 0; i < Objects.requireNonNull(files).length; i = i + 1) {
-					if (files[i].toString().contains(".txt")) {
-						if (i + 1 == files.length) {
-							tmp = ans + files[i].toString().replace(".\\", "").replace(".txt", "");
-						} else {
-							tmp = ans + files[i].toString().replace(".\\", "").replace(".txt", "") + "\n";
-						}
-						ans = tmp;
+			System.exit(0);
+		} else if (str.equals(Lang.command[6])) {
+			File dir = new File("Text");
+			File[] files = dir.listFiles();
+			String ans = "", tmp;
+			for (int i = 0; i < Objects.requireNonNull(files).length; i = i + 1) {
+				if (files[i].toString().contains(".txt")) {
+					if (i + 1 == files.length) {
+						tmp = ans + files[i].toString().replace("Text", "").replace(".txt", "");
+					} else {
+						tmp = ans + files[i].toString().replace("Text", "").replace(".txt", "") + "\n";
 					}
+					ans = tmp;
 				}
-				outMessage(msg, ans);
 			}
-			case "!ひとり" -> {
-				String[] list = RandomPick.randomPick(1);
-				outMessage(msg, Objects.requireNonNull(list)[0]);
-				mode = 0;
-			}
+			outMessage(msg, ans);
+		} else if (str.equals(Lang.command[7])) {
+			String[] list = RandomPick.randomPick(1);
+			outMessage(msg, Objects.requireNonNull(list)[0]);
+			mode = 0;
 		}
 	}
 
 	public void fileInputMode(String str, Message msg) {
 		RandomPick.init(str);
 		if (RandomPick.canUse) {
-			outMessage(msg, "ファイルを読み込みました");
+			outMessage(msg, Lang.text[6]);
 		} else {
-			outMessage(msg, "ファイルを読み込めませんでした");
+			outMessage(msg, Lang.text[7]);
 		}
 		mode = 0;
 	}
 
 	public void integerInputMode(String str, Message msg) {
 		if (!str.matches("[+-]?\\d*(\\.\\d+)?")) {
-			outMessage(msg, "数値ではありません");
+			outMessage(msg, Lang.text[8]);
 		} else if ((Integer.parseInt(str) <= RandomPick.names.length) && (Integer.parseInt(str) > 0)) {
 			String[] list = RandomPick.randomPick(Integer.parseInt(str));
 			String all = "", tmp;
@@ -127,7 +112,7 @@ public class DiscordAPI extends ListenerAdapter {
 			}
 			outMessage(msg, all);
 		} else {
-			outMessage(msg, "ピック数が不正です");
+			outMessage(msg, Lang.text[9]);
 		}
 		mode = 0;
 	}

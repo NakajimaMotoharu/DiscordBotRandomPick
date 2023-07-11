@@ -13,17 +13,18 @@ public class Main {
 	public static void main(String[] args) {
 		String BOT_TOKEN = null;
 
-		Path path = Paths.get("BOT_TOKEN.token");
+		Path path = Paths.get("settings.conf");
 		if (Files.exists(path)){
 			try {
 				List<String> list = Files.readAllLines(path);
 				BOT_TOKEN = list.get(0);
+				Lang.init(list.get(1));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("ボットトークンが見つかりませんでした");
-			System.out.println("BOT_TOKEN.tokenにボットトークンだけを記載してルートディレクトリに配置してください");
+			System.out.println("Config file not found.");
+			System.out.println("Put the bot token and language file name in settings.conf and place it in the root directory.");
 			System.exit(1);
 		}
 

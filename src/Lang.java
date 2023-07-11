@@ -29,7 +29,7 @@ public class Lang {
 			}
 		} else {
 			System.out.println("Language file not found.");
-			System.out.println("Put the language file in xxx.lang and place it in the root directory.");
+			System.out.println("Put the language file in xxx.lang and place it in the Languages directory.");
 			System.exit(1);
 		}
 	}
